@@ -1,9 +1,8 @@
 from oldknife.util.version import isv3
 
-
 def to_hex(x):
     s = None
-    if isinstance(x, int):
+    if isinstance(x, int) or (not isv3() and isinstance(x, long)):
         s = hex(x)[2:].rstrip('L')
     elif isv3():
         from binascii import hexlify
