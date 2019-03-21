@@ -38,4 +38,4 @@ def z85dec(src):
         if i % 5 == 4:
             xs.append(x)
 
-    return to_str(struct.pack('>{}I'.format(len(xs)), *xs))
+    return struct.pack('>{}I'.format(len(xs)), *xs)

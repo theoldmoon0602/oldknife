@@ -45,20 +45,23 @@ def rsa_from_n_phi(n, phi):
     except:
         return [int(p), int(q)]
 
-def rsa_params(**kwargs):
-    if 'n' in kwargs and 'phi' in kwargs and ('p' not in kwargs or 'q' not in kwargs):
-        p, q = rsa_from_n_phi(kwargs['n'], kwargs['phi'])
-        kwargs['p'] = p
-        kwargs['q'] = q
+def rsa_params(**params):
+    if 'n' in params and 'phi' in params and ('p' not in params or 'q' not in params):
+        p, q = rsa_from_n_phi(params['n'], params['phi'])
+        params['p'] = p
+        params['q'] = q
 
-    if 'p' in kwargs and 'q' in kwargs:
-        if 'n' not in kwargs:
-            kwargs['n'] = kwargs['p'] * kwargs['q']
-        if 'phi' not in kwargs:
-            kwargs['n'] = (kwargs['p'] - 1) * (kwargs['q'] - 1)
+    if 'p' in params and 'q' in params:
+        if 'n' not in params:
+            params['n'] = params['p'] * params['q']
+        if 'phi' not in params:
+            params['phi'] = (params['p'] - 1) * (params['q'] - 1)
 
-    if 'phi' in kwargs and 'e' in kwargs and 'd' not in kwargs:
-        kwargs['d'] = modinv(kwargs['e'], kwargs['phi']) 
+    assert(params['n'] == params['p'] * params['q'])
+    assert(params['phi'] == (params['p'] - 1) * (params['q']- 1))
 
-    return kwargs
+    if 'phi' in params and 'e' in params and 'd' not in params:
+        params['d'] = modinv(params['e'], params['phi']) 
+
+    return params
 
